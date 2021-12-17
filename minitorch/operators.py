@@ -69,21 +69,11 @@ def max(x, y):
 
 
 def is_close(x, y):
-    if math.fabs(x - y) < 0.001:
-        return 1.0
-    else:
-        return 0.0
     ":math:`f(x) = |x - y| < 1e-2` "
-    # TODO: Implement for Task 0.1.
-    # raise NotImplementedError("Need to implement for Task 0.1")
+    return abs(x - y) <= 1e-2
 
 
 def sigmoid(x):
-    if x >= 0:
-        return 1.0 / 1.0 + math.exp(-x)
-    else:
-        return math.exp(x) / 1.0 + math.exp(x)
-
     r"""
     :math:`f(x) =  \frac{1.0}{(1.0 + e^{-x})}`
 
@@ -101,8 +91,7 @@ def sigmoid(x):
     Returns:
         float : sigmoid value
     """
-    # TODO: Implement for Task 0.1.
-    # raise NotImplementedError("Need to implement for Task 0.1")
+    return 1.0 / (1.0 + exp(-x)) if x >= 0 else (exp(x)) / (1.0 + exp(x))
 
 
 def relu(x):
@@ -196,14 +185,17 @@ def map(fn):
         function : A function that takes a list, applies `fn` to each element, and returns a
         new list
     """
-    # TODO: Implement for Task 0.3.
-    raise NotImplementedError("Need to implement for Task 0.3")
+
+    def mapper(ls):
+        return [fn(x) for x in ls]
+
+    return mapper
 
 
 def negList(ls):
     "Use :func:`map` and :func:`neg` to negate each element in `ls`"
-    # TODO: Implement for Task 0.3.
-    raise NotImplementedError("Need to implement for Task 0.3")
+    fn = map(neg)
+    return fn(ls)
 
 
 def zipWith(fn):
@@ -222,14 +214,16 @@ def zipWith(fn):
         applying fn(x, y) on each pair of elements.
 
     """
-    # TODO: Implement for Task 0.3.
-    raise NotImplementedError("Need to implement for Task 0.3")
+
+    def zippo(ls1, ls2):
+        return [fn(x, y) for x, y in zip(ls1, ls2)]
+
+    return zippo
 
 
 def addLists(ls1, ls2):
     "Add the elements of `ls1` and `ls2` using :func:`zipWith` and :func:`add`"
-    # TODO: Implement for Task 0.3.
-    raise NotImplementedError("Need to implement for Task 0.3")
+    return zipWith(add)(ls1, ls2)
 
 
 def reduce(fn, start):
@@ -248,17 +242,21 @@ def reduce(fn, start):
         :math:`x_1 \ldots x_n` and computes the reduction :math:`fn(x_3, fn(x_2,
         fn(x_1, x_0)))`
     """
-    # TODO: Implement for Task 0.3.
-    raise NotImplementedError("Need to implement for Task 0.3")
+
+    def function(ls):
+        res = start
+        for x in ls:
+            res = fn(res, x)
+        return res
+
+    return function
 
 
 def sum(ls):
     "Sum up a list using :func:`reduce` and :func:`add`."
-    # TODO: Implement for Task 0.3.
-    raise NotImplementedError("Need to implement for Task 0.3")
+    return reduce(add, 0)(ls)
 
 
 def prod(ls):
     "Product of a list using :func:`reduce` and :func:`mul`."
-    # TODO: Implement for Task 0.3.
-    raise NotImplementedError("Need to implement for Task 0.3")
+    return reduce(mul, 1)(ls)
